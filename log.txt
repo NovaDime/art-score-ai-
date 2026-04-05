@@ -1,0 +1,94 @@
+nohup: ignoring input
+INFO:     Started server process [99841]
+INFO:     Waiting for application startup.
+`torch_dtype` is deprecated! Use `dtype` instead!
+加载 Qwen2.5-VL 模型中...
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:23<00:23, 23.03s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:50<00:00, 25.84s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:50<00:00, 25.42s/it]
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8888 (Press CTRL+C to quit)
+Qwen2.5-VL 模型加载完成
+INFO:     127.0.0.1:41040 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41040 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+
+====== 登录数据 ======
+输入账号: [CGG41], 输入密码: [52113]
+======================
+
+INFO:     127.0.0.1:41040 - "POST /login HTTP/1.1" 200 OK
+开始视觉评分推理...
+
+====== 模型原始输出 ======
+```json
+{
+  "image_description": "这张图片展示了一个电脑屏幕的截图，屏幕上显示了一条警告信息，警告用户正在被名为Delilah Warren的黑客攻击。警告信息是红色的大字，背景是绿色的计算机界面。右上角有一个卡通人物形象，戴着一顶带有红星的帽子，手持一把枪，表情严肃。",
+  "composition": 80,
+  "color": 75,
+  "creativity": 85,
+  "completeness": 78,
+  "theme": 82,
+  "comment": "整体评价：图片的构图清晰，颜色对比鲜明，创意独特，完整性较好，主题与网络安全相关。",
+  "suggestion": "改进建议：可以考虑增加更多的细节来丰富画面，例如添加更多关于黑客攻击的信息或用户反应的元素。"
+}
+```
+INFO:     127.0.0.1:43108 - "POST /upload HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58692 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58692 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+
+====== 登录数据 ======
+输入账号: [CGG41], 输入密码: [52113]
+======================
+
+INFO:     127.0.0.1:41506 - "POST /login HTTP/1.1" 200 OK
+开始视觉评分推理...
+
+====== 模型原始输出 ======
+```json
+{
+  "image_description": "这张图片展示了一个电脑屏幕的截图，屏幕上显示了一条警告信息，警告用户正在被名为Delilah Warren的黑客攻击。警告信息是红色的大字，背景是绿色的计算机界面。右上角有一个卡通人物形象，戴着一顶带有红星的帽子，手持一把枪，表情严肃。",
+  "composition": 80,
+  "color": 75,
+  "creativity": 85,
+  "completeness": 78,
+  "theme": 82,
+  "comment": "整体评价：图片的构图清晰，颜色对比鲜明，创意独特，完整性较好，主题与网络安全相关。",
+  "suggestion": "改进建议：可以考虑增加更多的细节来丰富画面，例如添加更多关于黑客攻击的信息或用户反应的元素。"
+}
+```
+INFO:     127.0.0.1:47010 - "POST /upload HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56610 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34534 - "GET / HTTP/1.1" 200 OK
+
+====== 登录数据 ======
+输入账号: [CGG41], 输入密码: [52113]
+======================
+
+INFO:     127.0.0.1:37914 - "POST /login HTTP/1.1" 200 OK
+开始视觉评分推理...
+
+====== 模型原始输出 ======
+```json
+{
+  "image_description": "这张图片展示了一盘食物，包括切片的肉类、卷心菜和半个煮熟的鸡蛋。肉类看起来是经过炖煮的，表面有光泽，卷心菜被切成小块，颜色鲜绿，鸡蛋呈现出淡黄色的蛋黄。整个盘子放在一个橙色的塑料盘子里。",
+  "composition": 80,
+  "color": 75,
+  "creativity": 85,
+  "completeness": 78,
+  "theme": 82,
+  "comment": "整体评价：图片构图清晰，主体突出，色彩搭配和谐，具有一定的创意。然而，部分食材的排列略显杂乱，缺乏整体协调感。",
+  "suggestion": "建议在排列食材时，尽量保持食材的整齐排列，以增强视觉效果。同时，可以考虑调整食材的比例，使每种食材都能均匀分布，增加整体的美观度。"
+}
+```
+INFO:     127.0.0.1:52044 - "POST /upload HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50008 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50008 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+
+====== 登录数据 ======
+输入账号: [CGG41], 输入密码: [52113]
+======================
+
+INFO:     127.0.0.1:50008 - "POST /login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38904 - "GET / HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [99841]
