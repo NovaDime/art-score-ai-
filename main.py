@@ -44,7 +44,10 @@ ALLOWED_CONTENT_TYPES = {
 }
 MAX_FILE_SIZE = 10 * 1024 * 1024
 
-MODEL_PATH = "/home/xsuper/art-score-ai/models/Qwen/Qwen2.5-VL-3B-Instruct"
+MODEL_PATH = os.getenv(
+    "MODEL_PATH",
+    os.path.join(BASE_DIR, "models", "Qwen", "Qwen2.5-VL-3B-Instruct")
+)
 
 processor = None
 model = None
