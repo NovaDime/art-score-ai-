@@ -8,17 +8,14 @@ cd "$PROJECT_DIR"
 
 if [ -f "$PID_FILE" ]; then
   PID=$(cat "$PID_FILE" 2>/dev/null)
-
   if [ -n "$PID" ] && kill -0 "$PID" 2>/dev/null; then
     echo "正在停止应用，PID=$PID"
     kill "$PID"
     sleep 2
-
     if kill -0 "$PID" 2>/dev/null; then
       echo "普通停止未成功，执行强制终止..."
       kill -9 "$PID"
     fi
-
     rm -f "$PID_FILE"
     echo "应用已停止"
     exit 0

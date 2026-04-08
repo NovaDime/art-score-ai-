@@ -3,42 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI智能评估与成长系统</title>
+  <title>AI智能评估与成长系统 8.0 Beta</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    *{
-      box-sizing:border-box;
-    }
-
+    *{box-sizing:border-box}
     :root{
       --bg1:#eef6ff;
-      --bg2:#eaf3ff;
-      --bg3:#dbeafe;
-      --card:rgba(255,255,255,0.72);
-      --card-strong:rgba(255,255,255,0.82);
-      --line:rgba(59,130,246,0.12);
+      --bg2:#e6f1ff;
+      --bg3:#d7e9ff;
+      --card:rgba(255,255,255,0.76);
+      --card-strong:rgba(255,255,255,0.86);
+      --line:rgba(59,130,246,0.14);
       --text:#0f172a;
-      --muted:#5b6f95;
+      --muted:#5d7297;
       --blue:#3b82f6;
       --blue-strong:#2563eb;
       --blue-soft:rgba(59,130,246,0.10);
-      --green-bg:rgba(34,197,94,0.08);
-      --green-line:rgba(34,197,94,0.16);
-      --green-text:#166534;
       --cyan-bg:rgba(14,165,233,0.08);
       --cyan-line:rgba(14,165,233,0.16);
       --cyan-text:#0c4a6e;
-      --shadow:0 12px 34px rgba(37,99,235,0.10);
-      --topbar-bg:rgba(255,255,255,0.60);
-      --panel-hover:0 18px 42px rgba(37,99,235,0.12);
+      --violet-bg:rgba(99,102,241,0.08);
+      --violet-line:rgba(99,102,241,0.16);
+      --violet-text:#4338ca;
+      --green-bg:rgba(34,197,94,0.08);
+      --green-line:rgba(34,197,94,0.16);
+      --green-text:#166534;
+      --red-bg:rgba(239,68,68,0.09);
+      --red-line:rgba(239,68,68,0.16);
+      --red-text:#991b1b;
+      --shadow:0 14px 38px rgba(37,99,235,0.12);
+      --topbar-bg:rgba(255,255,255,0.58);
+      --panel-hover:0 20px 44px rgba(37,99,235,0.13);
       --input-bg:rgba(255,255,255,0.72);
       --section-bg:rgba(255,255,255,0.34);
-      --preview-bg:rgba(255,255,255,0.45);
-      --menu-bg:rgba(255,255,255,0.35);
-      --chart-label:#476387;
+      --preview-bg:rgba(255,255,255,0.46);
       --score-glow:0 0 18px rgba(59,130,246,0.10);
     }
-
     body.dark{
       --bg1:#07111f;
       --bg2:#0a1b33;
@@ -51,27 +51,27 @@
       --blue:#4da3ff;
       --blue-strong:#2f7df6;
       --blue-soft:rgba(77,163,255,0.18);
-      --green-bg:rgba(34,197,94,0.10);
-      --green-line:rgba(134,239,172,0.25);
-      --green-text:#c6f6d5;
       --cyan-bg:rgba(56,189,248,0.12);
       --cyan-line:rgba(125,211,252,0.22);
       --cyan-text:#d7f1ff;
-      --shadow:0 12px 40px rgba(0,0,0,0.32);
+      --violet-bg:rgba(129,140,248,0.16);
+      --violet-line:rgba(165,180,252,0.24);
+      --violet-text:#e0e7ff;
+      --green-bg:rgba(34,197,94,0.10);
+      --green-line:rgba(134,239,172,0.20);
+      --green-text:#ccf7db;
+      --red-bg:rgba(248,113,113,0.12);
+      --red-line:rgba(252,165,165,0.24);
+      --red-text:#ffe0e0;
+      --shadow:0 14px 40px rgba(0,0,0,0.32);
       --topbar-bg:rgba(7,17,31,0.58);
       --panel-hover:0 18px 48px rgba(0,0,0,0.38);
       --input-bg:rgba(255,255,255,0.04);
       --section-bg:rgba(255,255,255,0.03);
       --preview-bg:rgba(255,255,255,0.03);
-      --menu-bg:rgba(255,255,255,0.02);
-      --chart-label:#c7d8f7;
       --score-glow:0 0 18px rgba(77,163,255,0.14);
     }
-
-    html{
-      scroll-behavior:smooth;
-    }
-
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:"Segoe UI","Microsoft YaHei",sans-serif;
@@ -85,792 +85,118 @@
       overflow-x:hidden;
       transition:background .35s ease,color .25s ease;
     }
-
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background:linear-gradient(rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      z-index:0;
-    }
-
-    .aurora{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      overflow:hidden;
-      z-index:0;
-    }
-
-    .aurora span{
-      position:absolute;
-      border-radius:50%;
-      filter:blur(60px);
-      opacity:0.24;
-      animation:floatGlow 14s ease-in-out infinite;
-    }
-
-    .aurora span:nth-child(1){
-      width:320px;
-      height:320px;
-      background:#60a5fa;
-      top:8%;
-      left:6%;
-    }
-
-    .aurora span:nth-child(2){
-      width:260px;
-      height:260px;
-      background:#38bdf8;
-      top:18%;
-      right:10%;
-      animation-delay:2s;
-    }
-
-    .aurora span:nth-child(3){
-      width:280px;
-      height:280px;
-      background:#3b82f6;
-      bottom:8%;
-      left:28%;
-      animation-delay:5s;
-    }
-
-    @keyframes floatGlow{
-      0%,100%{transform:translateY(0) translateX(0) scale(1)}
-      50%{transform:translateY(-18px) translateX(14px) scale(1.06)}
-    }
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:20;
-      height:88px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 28px;
-      background:var(--topbar-bg);
-      border-bottom:1px solid var(--line);
-      backdrop-filter:blur(18px);
-      box-shadow:0 10px 30px rgba(0,0,0,0.06);
-    }
-
-    .topbar-left{
-      font-size:25px;
-      font-weight:800;
-      letter-spacing:0.2px;
-      color:var(--text);
-    }
-
-    .topbar-right{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-
-    .theme-toggle,
-    .teacher-entry{
-      color:var(--muted);
-      font-size:15px;
-      padding:10px 14px;
-      border-radius:14px;
-      background:var(--menu-bg);
-      border:1px solid var(--line);
-      transition:all .25s ease;
-      cursor:pointer;
-      backdrop-filter:blur(12px);
-    }
-
-    .theme-toggle:hover,
-    .teacher-entry:hover{
-      transform:translateY(-1px);
-      background:var(--blue-soft);
-      border-color:rgba(59,130,246,0.22);
-    }
-
-    .school-badge{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:12px 18px;
-      border:1px solid rgba(59,130,246,0.20);
-      border-radius:18px;
-      background:linear-gradient(135deg, rgba(59,130,246,0.14), rgba(255,255,255,0.20));
-      color:var(--blue-strong);
-      font-weight:700;
-      min-width:280px;
-      justify-content:center;
-      box-shadow:0 8px 20px rgba(37,99,235,0.10);
-      backdrop-filter:blur(14px);
-      transition:transform .25s ease, box-shadow .25s ease;
-    }
-
-    body.dark .school-badge{
-      color:#dbeafe;
-      background:linear-gradient(135deg, rgba(77,163,255,0.16), rgba(77,163,255,0.06));
-      box-shadow:0 8px 20px rgba(37,99,235,0.15);
-    }
-
-    .school-badge:hover{
-      transform:translateY(-2px);
-    }
-
-    .layout{
-      position:relative;
-      z-index:1;
-      display:grid;
-      grid-template-columns:240px 1fr 390px;
-      gap:22px;
-      padding:22px;
-      min-height:calc(100vh - 88px);
-    }
-
-    .panel{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:24px;
-      box-shadow:var(--shadow);
-      backdrop-filter:blur(18px);
-      transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
-    }
-
-    .panel:hover{
-      transform:translateY(-2px);
-      box-shadow:var(--panel-hover);
-      border-color:rgba(59,130,246,0.18);
-    }
-
-    .sidebar{
-      padding:18px;
-    }
-
-    .user-card{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      background:linear-gradient(135deg, rgba(59,130,246,0.10), rgba(255,255,255,0.18));
-      border:1px solid rgba(59,130,246,0.16);
-      border-radius:20px;
-      padding:18px;
-      margin-bottom:18px;
-      backdrop-filter:blur(12px);
-    }
-
-    body.dark .user-card{
-      background:linear-gradient(135deg, rgba(77,163,255,0.10), rgba(255,255,255,0.02));
-      border-color:rgba(77,163,255,0.16);
-    }
-
-    .avatar{
-      width:54px;
-      height:54px;
-      border-radius:50%;
-      background:linear-gradient(135deg,var(--blue),var(--blue-strong));
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:28px;
-      font-weight:700;
-      flex-shrink:0;
-      box-shadow:0 10px 24px rgba(37,99,235,0.20);
-    }
-
-    .user-name{
-      font-size:15px;
-      font-weight:700;
-      color:var(--text);
-      margin-bottom:4px;
-    }
-
-    .user-sub{
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    .menu{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      margin-bottom:20px;
-    }
-
-    .menu-item{
-      padding:16px 18px;
-      border-radius:18px;
-      color:var(--text);
-      font-size:16px;
-      font-weight:600;
-      border:1px solid transparent;
-      background:var(--menu-bg);
-      transition:all .25s ease;
-    }
-
-    .menu-item:hover{
-      background:var(--blue-soft);
-      border-color:rgba(59,130,246,0.16);
-      transform:translateX(4px);
-    }
-
-    .menu-item.active{
-      background:linear-gradient(135deg, rgba(59,130,246,0.12), rgba(255,255,255,0.20));
-      border:1px solid rgba(59,130,246,0.30);
-      color:var(--blue-strong);
-      box-shadow:inset 0 0 0 1px rgba(59,130,246,0.08);
-    }
-
-    body.dark .menu-item.active{
-      color:#7cc0ff;
-      background:linear-gradient(135deg, rgba(77,163,255,0.14), rgba(77,163,255,0.06));
-      border-color:rgba(77,163,255,0.36);
-    }
-
-    .current-work{
-      margin-top:22px;
-      padding:18px;
-      border-radius:20px;
-      border:1px solid var(--line);
-      background:var(--menu-bg);
-    }
-
-    .current-work .small-title{
-      color:var(--muted);
-      font-size:14px;
-      margin-bottom:10px;
-    }
-
-    .current-work .work-name{
-      font-size:18px;
-      font-weight:700;
-      margin-bottom:8px;
-      color:var(--text);
-      word-break:break-all;
-    }
-
-    .current-work .work-time{
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    .middle{
-      display:flex;
-      flex-direction:column;
-      gap:22px;
-    }
-
-    .section-header{
-      padding:22px 24px;
-      border-bottom:1px solid var(--line);
-      font-size:20px;
-      font-weight:800;
-      color:var(--text);
-    }
-
-    .work-display-body{
-      padding:22px 24px;
-    }
-
-    .work-row{
-      background:var(--section-bg);
-      border-radius:20px;
-      padding:18px 20px;
-      border:1px solid var(--line);
-    }
-
-    .work-row-title{
-      font-size:16px;
-      font-weight:700;
-      color:var(--text);
-      margin-bottom:14px;
-      word-break:break-all;
-    }
-
-    .work-meta{
-      display:flex;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-      color:var(--muted);
-      font-size:15px;
-      margin-bottom:18px;
-    }
-
-    .rubric-box{
-      width:100%;
-      min-height:120px;
-      border:1px solid rgba(59,130,246,0.18);
-      border-radius:18px;
-      padding:14px;
-      resize:vertical;
-      background:var(--input-bg);
-      font-size:14px;
-      color:var(--text);
-      outline:none;
-      margin-bottom:16px;
-      transition:all .25s ease;
-    }
-
-    .rubric-box::placeholder{
-      color:var(--muted);
-    }
-
-    .rubric-box:focus{
-      border-color:rgba(59,130,246,0.45);
-      box-shadow:0 0 0 4px rgba(59,130,246,0.08);
-    }
-
-    .upload-area{
-      border:2px dashed rgba(59,130,246,0.48);
-      border-radius:20px;
-      background:linear-gradient(180deg, rgba(59,130,246,0.08), rgba(255,255,255,0.12));
-      padding:28px 18px;
-      text-align:center;
-      color:var(--blue-strong);
-      transition:all .25s ease;
-      cursor:pointer;
-      margin-bottom:18px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    body.dark .upload-area{
-      border-color:rgba(77,163,255,0.60);
-      background:linear-gradient(180deg, rgba(77,163,255,0.08), rgba(255,255,255,0.03));
-      color:#7cc0ff;
-    }
-
-    .upload-area::before{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background:linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.18) 50%, transparent 65%);
-      transform:translateX(-100%);
-      transition:transform .8s ease;
-    }
-
-    .upload-area:hover::before{
-      transform:translateX(100%);
-    }
-
-    .upload-area:hover{
-      border-color:var(--blue);
-      background:linear-gradient(180deg, rgba(59,130,246,0.12), rgba(255,255,255,0.18));
-      box-shadow:0 10px 28px rgba(37,99,235,0.12);
-    }
-
-    .upload-area.highlight{
-      border-color:var(--blue);
-      background:var(--blue-soft);
-      transform:scale(1.01);
-    }
-
-    .upload-area input{
-      display:none;
-    }
-
-    .upload-btn{
-      width:100%;
-      border:none;
-      border-radius:18px;
-      padding:15px 18px;
-      font-size:16px;
-      font-weight:800;
-      background:linear-gradient(90deg,var(--blue) 0%,var(--blue-strong) 45%,#1d4ed8 100%);
-      color:#fff;
-      cursor:pointer;
-      box-shadow:0 12px 30px rgba(37,99,235,0.20);
-      transition:transform .22s ease, box-shadow .22s ease, filter .22s ease;
-    }
-
-    .upload-btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 16px 34px rgba(37,99,235,0.28);
-      filter:brightness(1.05);
-    }
-
-    .upload-btn:active{
-      transform:translateY(0);
-    }
-
-    .upload-btn:disabled{
-      opacity:0.72;
-      cursor:not-allowed;
-      transform:none;
-    }
-
-    .preview-wrap{
-      margin-top:20px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      min-height:220px;
-      background:var(--preview-bg);
-      border:1px solid var(--line);
-      border-radius:20px;
-      overflow:hidden;
-      position:relative;
-    }
-
-    .preview-wrap::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to top, rgba(255,255,255,0.03), transparent);
-      pointer-events:none;
-    }
-
-    #previewImage{
-      max-width:100%;
-      max-height:320px;
-      display:none;
-      border-radius:14px;
-      animation:fadeIn .4s ease;
-    }
-
-    @keyframes fadeIn{
-      from{opacity:0; transform:scale(0.985)}
-      to{opacity:1; transform:scale(1)}
-    }
-
-    #emptyPreview{
-      color:var(--muted);
-      font-size:15px;
-      padding:30px;
-      text-align:center;
-    }
-
-    .evaluation-body{
-      padding:22px 24px 24px;
-    }
-
-    .subsection-title{
-      font-size:16px;
-      font-weight:800;
-      color:var(--text);
-      margin-bottom:16px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .subsection-title::before{
-      content:"";
-      width:5px;
-      height:22px;
-      border-radius:6px;
-      background:linear-gradient(180deg,#7cc0ff,var(--blue-strong));
-      display:inline-block;
-      box-shadow:0 0 14px rgba(59,130,246,0.26);
-    }
-
-    .comment-list{
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-    }
-
-    .comment-card{
-      background:var(--green-bg);
-      border:1px solid var(--green-line);
-      border-radius:20px;
-      padding:18px 18px 18px 20px;
-      line-height:1.9;
-      font-size:15px;
-      color:var(--green-text);
-      backdrop-filter:blur(10px);
-      transition:transform .2s ease, box-shadow .2s ease;
-    }
-
-    .comment-card:hover{
-      transform:translateY(-1px);
-      box-shadow:0 10px 24px rgba(0,0,0,0.08);
-    }
-
-    body.dark .comment-card:hover{
-      box-shadow:0 10px 24px rgba(0,0,0,0.18);
-    }
-
-    .comment-card b{
-      color:inherit;
-      font-weight:800;
-    }
-
-    .description-card{
-      background:var(--cyan-bg);
-      border:1px solid var(--cyan-line);
-      color:var(--cyan-text);
-    }
-
-    .right{
-      padding:0;
-      overflow:hidden;
-      background:var(--card-strong);
-    }
-
-    .right-header{
-      padding:22px 24px;
-      border-bottom:1px solid var(--line);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-
-    .right-header-title{
-      font-size:20px;
-      font-weight:800;
-      color:var(--text);
-    }
-
-    .export-btn{
-      border:none;
-      border-radius:16px;
-      background:linear-gradient(135deg,var(--blue),var(--blue-strong));
-      color:#fff;
-      font-size:15px;
-      font-weight:700;
-      padding:12px 18px;
-      cursor:pointer;
-      box-shadow:0 10px 24px rgba(37,99,235,0.18);
-      transition:all .24s ease;
-    }
-
-    .export-btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 14px 30px rgba(37,99,235,0.24);
-    }
-
-    .right-body{
-      padding:18px 22px 26px;
-    }
-
-    .chart-box{
-      height:330px;
-      padding:10px 4px 0;
-      border-radius:18px;
-      background:var(--section-bg);
-    }
-
-    .score-box{
-      margin-top:18px;
-      padding:24px 10px;
-      text-align:center;
-      border-top:1px solid var(--line);
-      border-bottom:1px solid var(--line);
-    }
-
-    .score-label{
-      font-size:16px;
-      color:var(--muted);
-      margin-bottom:12px;
-    }
-
-    .score-value{
-      font-size:60px;
-      font-weight:800;
-      color:var(--blue);
-      line-height:1;
-      text-shadow:var(--score-glow);
-    }
-
-    .score-value span{
-      font-size:24px;
-      color:var(--muted);
-      font-weight:600;
-    }
-
-    .detail-link{
-      display:block;
-      margin:18px 0 20px;
-      color:var(--blue);
-      font-size:16px;
-      font-weight:700;
-      text-decoration:none;
-      transition:opacity .2s ease;
-    }
-
-    .detail-link:hover{
-      opacity:0.85;
-    }
-
-    .dimension-list{
-      border-top:1px solid var(--line);
-      padding-top:18px;
-    }
-
-    .dimension-title{
-      font-size:18px;
-      font-weight:800;
-      margin-bottom:14px;
-      color:var(--text);
-    }
-
-    .dimension-item{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:12px 0;
-      border-bottom:1px solid var(--line);
-      font-size:15px;
-      color:var(--text);
-    }
-
-    .dimension-item span:last-child{
-      font-weight:800;
-      color:var(--blue-strong);
-    }
-
-    @media (max-width: 1280px){
-      .layout{
-        grid-template-columns:220px 1fr;
-      }
-      .right{
-        grid-column:1 / -1;
-      }
-    }
-
-    @media (max-width: 900px){
-      .layout{
-        grid-template-columns:1fr;
-      }
-      .topbar{
-        flex-direction:column;
-        height:auto;
-        gap:12px;
-        padding:18px;
-      }
-      .topbar-right{
-        width:100%;
-        justify-content:space-between;
-      }
-      .school-badge{
-        width:100%;
-        min-width:unset;
-      }
-    }
-
-    .login-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-    }
-
-    body.dark .login-overlay {
-      background: rgba(15, 23, 42, 0.5);
-    }
-
-    .login-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .login-box {
-      background: var(--card-strong);
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 40px;
-      width: 360px;
-      text-align: center;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.08);
-      transform: translateY(0) scale(1);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .login-overlay.hidden .login-box {
-      transform: translateY(20px) scale(0.95);
-    }
-
-    .login-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .login-sub {
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-
-    .login-input {
-      width: 100%;
-      background: var(--input-bg);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px 20px;
-      font-size: 16px;
-      color: var(--text);
-      outline: none;
-      margin-bottom: 16px;
-      transition: all 0.25s ease;
-      text-align: center;
-      letter-spacing: 1px;
-    }
-
-    .login-input:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 4px var(--blue-soft);
-    }
-
-    .login-btn {
-      width: 100%;
-      background: var(--text);
-      color: var(--bg1);
-      border: none;
-      border-radius: 16px;
-      padding: 16px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      margin-top: 8px;
-    }
-
-    .login-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
-    }
-
-    body.dark .login-btn {
-      background: #fff;
-      color: #000;
-    }
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,0.02), rgba(255,255,255,0.01));z-index:0}
+    .aurora{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+    .aurora span{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.24;animation:floatGlow 14s ease-in-out infinite}
+    .aurora span:nth-child(1){width:320px;height:320px;background:#60a5fa;top:8%;left:6%}
+    .aurora span:nth-child(2){width:260px;height:260px;background:#38bdf8;top:18%;right:10%;animation-delay:2s}
+    .aurora span:nth-child(3){width:280px;height:280px;background:#6366f1;bottom:8%;left:28%;animation-delay:5s}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) translateX(0) scale(1)}50%{transform:translateY(-18px) translateX(14px) scale(1.06)}}
+    .topbar{position:sticky;top:0;z-index:20;height:88px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:var(--topbar-bg);border-bottom:1px solid var(--line);backdrop-filter:blur(18px);box-shadow:0 10px 30px rgba(0,0,0,0.06)}
+    .topbar-left{font-size:24px;font-weight:800;letter-spacing:0.2px}
+    .topbar-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .theme-toggle,.status-chip,.beta-chip{color:var(--muted);font-size:14px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,0.20);border:1px solid var(--line);transition:all .25s ease;cursor:pointer;backdrop-filter:blur(12px)}
+    .beta-chip{font-weight:700;color:var(--blue-strong);background:linear-gradient(135deg, rgba(99,102,241,0.12), rgba(59,130,246,0.10))}
+    .theme-toggle:hover{transform:translateY(-1px);background:var(--blue-soft);border-color:rgba(59,130,246,0.22)}
+    .layout{position:relative;z-index:1;display:grid;grid-template-columns:240px 1fr 400px;gap:22px;padding:22px;min-height:calc(100vh - 88px)}
+    .panel{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(18px);transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease}
+    .panel:hover{transform:translateY(-2px);box-shadow:var(--panel-hover);border-color:rgba(59,130,246,0.18)}
+    .sidebar{padding:18px}
+    .user-card{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg, rgba(59,130,246,0.10), rgba(255,255,255,0.18));border:1px solid rgba(59,130,246,0.16);border-radius:20px;padding:18px;margin-bottom:18px;backdrop-filter:blur(12px)}
+    .avatar{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue-strong));color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;flex-shrink:0;box-shadow:0 10px 24px rgba(37,99,235,0.20)}
+    .user-name{font-size:15px;font-weight:700;margin-bottom:4px}
+    .user-sub{font-size:13px;color:var(--muted)}
+    .menu{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+    .menu-item{padding:16px 18px;border-radius:18px;color:var(--text);font-size:15px;font-weight:700;border:1px solid transparent;background:rgba(255,255,255,0.16);transition:all .25s ease}
+    .menu-item:hover{background:var(--blue-soft);border-color:rgba(59,130,246,0.16);transform:translateX(4px)}
+    .menu-item.active{background:linear-gradient(135deg, rgba(59,130,246,0.12), rgba(255,255,255,0.20));border:1px solid rgba(59,130,246,0.30);color:var(--blue-strong)}
+    .stack-card{padding:18px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,0.16);margin-top:16px}
+    .stack-title{font-size:14px;color:var(--muted);margin-bottom:10px}
+    .stack-content{font-size:15px;line-height:1.8}
+    .middle{display:flex;flex-direction:column;gap:22px}
+    .section-header{padding:22px 24px;border-bottom:1px solid var(--line);font-size:20px;font-weight:800}
+    .panel-body{padding:22px 24px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field-label{font-size:14px;font-weight:700;margin-bottom:8px;color:var(--muted)}
+    .select-like,.rubric-box,.mini-input{width:100%;border:1px solid rgba(59,130,246,0.18);border-radius:18px;padding:14px;background:var(--input-bg);font-size:14px;color:var(--text);outline:none;transition:all .25s ease}
+    .rubric-box{min-height:120px;resize:vertical}
+    .select-like:focus,.rubric-box:focus,.mini-input:focus{border-color:rgba(59,130,246,0.45);box-shadow:0 0 0 4px rgba(59,130,246,0.08)}
+    .mode-switch{display:flex;gap:10px;flex-wrap:wrap}
+    .mode-btn{border:none;border-radius:16px;padding:12px 16px;font-size:14px;font-weight:800;cursor:pointer;background:rgba(255,255,255,0.22);color:var(--text);border:1px solid var(--line);transition:all .25s ease}
+    .mode-btn.active{background:linear-gradient(90deg,var(--blue) 0%,var(--blue-strong) 100%);color:#fff;box-shadow:0 12px 28px rgba(37,99,235,0.18)}
+    .inline-check{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,0.16);border:1px solid var(--line);font-size:14px;font-weight:700}
+    .upload-area{border:2px dashed rgba(59,130,246,0.48);border-radius:20px;background:linear-gradient(180deg, rgba(59,130,246,0.08), rgba(255,255,255,0.12));padding:28px 18px;text-align:center;color:var(--blue-strong);transition:all .25s ease;cursor:pointer;margin-bottom:18px;position:relative;overflow:hidden}
+    .upload-area:hover{border-color:var(--blue);background:linear-gradient(180deg, rgba(59,130,246,0.12), rgba(255,255,255,0.18));box-shadow:0 10px 28px rgba(37,99,235,0.12)}
+    .upload-area.highlight{border-color:var(--blue);background:var(--blue-soft);transform:scale(1.01)}
+    .upload-area input{display:none}
+    .kb-upload-box{padding:16px;border-radius:20px;background:var(--violet-bg);border:1px solid var(--violet-line)}
+    .action-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .primary-btn,.secondary-btn{border:none;border-radius:18px;padding:15px 18px;font-size:15px;font-weight:800;cursor:pointer;transition:transform .22s ease, box-shadow .22s ease, filter .22s ease}
+    .primary-btn{background:linear-gradient(90deg,var(--blue) 0%,var(--blue-strong) 45%,#1d4ed8 100%);color:#fff;box-shadow:0 12px 30px rgba(37,99,235,0.20)}
+    .secondary-btn{background:linear-gradient(135deg, rgba(99,102,241,0.16), rgba(59,130,246,0.16));color:var(--violet-text);border:1px solid var(--violet-line)}
+    .primary-btn:hover,.secondary-btn:hover{transform:translateY(-2px)}
+    .primary-btn:disabled,.secondary-btn:disabled{opacity:0.72;cursor:not-allowed;transform:none}
+    .preview-wrap{margin-top:20px;display:flex;justify-content:center;align-items:center;min-height:220px;background:var(--preview-bg);border:1px solid var(--line);border-radius:20px;overflow:hidden;position:relative}
+    #previewImage{max-width:100%;max-height:320px;display:none;border-radius:14px;animation:fadeIn .4s ease}
+    #emptyPreview{color:var(--muted);font-size:15px;padding:30px;text-align:center}
+    @keyframes fadeIn{from{opacity:0; transform:scale(0.985)}to{opacity:1; transform:scale(1)}}
+    .subsection-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+    .subsection-title::before{content:"";width:5px;height:22px;border-radius:6px;background:linear-gradient(180deg,#7cc0ff,var(--blue-strong));display:inline-block;box-shadow:0 0 14px rgba(59,130,246,0.26)}
+    .comment-list{display:flex;flex-direction:column;gap:14px}
+    .comment-card{background:var(--green-bg);border:1px solid var(--green-line);border-radius:20px;padding:18px 18px 18px 20px;line-height:1.9;font-size:15px;color:var(--green-text);backdrop-filter:blur(10px)}
+    .comment-card b{font-weight:800}
+    .description-card{background:var(--cyan-bg);border:1px solid var(--cyan-line);color:var(--cyan-text)}
+    .beta-card{background:var(--violet-bg);border-color:var(--violet-line);color:var(--violet-text)}
+    .warn-card{background:var(--red-bg);border-color:var(--red-line);color:var(--red-text)}
+    .right{padding:0;overflow:hidden;background:var(--card-strong)}
+    .right-header{padding:22px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+    .right-header-title{font-size:20px;font-weight:800}
+    .right-body{padding:18px 22px 26px}
+    .chart-box{height:320px;padding:10px 4px 0;border-radius:18px;background:var(--section-bg)}
+    .score-box{margin-top:18px;padding:24px 10px;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .score-label{font-size:16px;color:var(--muted);margin-bottom:12px}
+    .score-value{font-size:60px;font-weight:800;color:var(--blue);line-height:1;text-shadow:var(--score-glow)}
+    .score-value span{font-size:24px;color:var(--muted);font-weight:600}
+    .dimension-list{border-top:1px solid var(--line);padding-top:18px}
+    .dimension-title{font-size:18px;font-weight:800;margin-bottom:14px}
+    .dimension-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+    .dimension-item span:last-child{font-weight:800;color:var(--blue-strong)}
+    .kb-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;max-height:240px;overflow:auto}
+    .kb-item{padding:14px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,0.16);font-size:14px;line-height:1.7}
+    .mini-note{margin-top:12px;font-size:13px;color:var(--muted);line-height:1.8}
+    .login-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.4);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity 0.4s ease, visibility 0.4s ease}
+    body.dark .login-overlay{background:rgba(15, 23, 42, 0.5)}
+    .login-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .login-box{background:var(--card-strong);border:1px solid var(--line);border-radius:28px;padding:40px;width:360px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,0.08);transform:translateY(0) scale(1);transition:transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)}
+    .login-overlay.hidden .login-box{transform:translateY(20px) scale(0.95)}
+    .login-title{font-size:22px;font-weight:700;margin-bottom:8px}
+    .login-sub{font-size:14px;color:var(--muted);margin-bottom:32px}
+    .login-input{width:100%;background:var(--input-bg);border:1px solid var(--line);border-radius:16px;padding:16px 20px;font-size:16px;color:var(--text);outline:none;margin-bottom:16px;transition:all 0.25s ease;text-align:center;letter-spacing:1px}
+    .login-btn{width:100%;background:var(--text);color:var(--bg1);border:none;border-radius:16px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.25s ease;margin-top:8px}
+    .login-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,0.15)}
+    @media (max-width: 1320px){.layout{grid-template-columns:220px 1fr}.right{grid-column:1 / -1}}
+    @media (max-width: 980px){.layout{grid-template-columns:1fr}.topbar{flex-direction:column;height:auto;gap:12px;padding:18px}.topbar-right{width:100%;justify-content:space-between}.grid-2{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="aurora">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  <div class="aurora"><span></span><span></span><span></span></div>
 
   <div class="login-overlay" id="loginOverlay">
     <div class="login-box">
       <div class="login-title">身份验证</div>
-      <div class="login-sub">AI智能评估与成长系统</div>
-      <input type="text" id="loginUser" class="login-input" placeholder="输入账号 (CGG41)" autocomplete="off" />
-      <input type="password" id="loginPwd" class="login-input" placeholder="输入密码 (最多5位)" maxlength="5" autocomplete="off" />
+      <div class="login-sub">AI智能评估与成长系统 8.0 Beta</div>
+      <input type="text" id="loginUser" class="login-input" placeholder="输入账号" autocomplete="off" />
+      <input type="password" id="loginPwd" class="login-input" placeholder="输入密码" autocomplete="off" />
       <button class="login-btn" id="loginBtn">登 录</button>
     </div>
   </div>
 
   <div class="topbar">
-    <div class="topbar-left">AI智能评估与成长系统</div>
+    <div class="topbar-left">AI智能评估与成长系统 · 8.0 Beta</div>
     <div class="topbar-right">
+      <div class="status-chip" id="modelStatusChip">模型状态读取中...</div>
+      <div class="beta-chip">Beta 预发布 · 大模型 + 知识库</div>
       <button class="theme-toggle" id="themeToggle">🌙 切换深色</button>
-      <div class="teacher-entry">🔗 教师端入口</div>
-      <div class="school-badge">✨ Hogwarts Spark University</div>
     </div>
   </div>
 
@@ -886,57 +212,97 @@
 
       <div class="menu">
         <div class="menu-item active">▦ 当前评估</div>
-        <div class="menu-item">↗ 历史成绩成长轨迹</div>
-        <div class="menu-item">○ 个人中心</div>
+        <div class="menu-item">◉ Beta 预发布路线</div>
+        <div class="menu-item">↗ 知识库扩展</div>
       </div>
 
-      <div class="current-work">
-        <div class="small-title">当前作品</div>
-        <div class="work-name" id="sidebarWorkName">未上传作品</div>
-        <div class="work-time" id="sidebarWorkTime">等待上传</div>
+      <div class="stack-card">
+        <div class="stack-title">当前运行模式</div>
+        <div class="stack-content" id="sidebarModeText">Stable V1</div>
+      </div>
+
+      <div class="stack-card">
+        <div class="stack-title">当前作品</div>
+        <div class="stack-content" id="sidebarWorkName">未上传作品</div>
+      </div>
+
+      <div class="stack-card">
+        <div class="stack-title">知识库状态</div>
+        <div class="stack-content" id="sidebarKbCount">0 个文件</div>
       </div>
     </div>
 
     <div class="middle">
       <div class="panel">
-        <div class="section-header">作品展示区</div>
-        <div class="work-display-body">
-          <div class="work-row">
-            <div class="work-row-title" id="workTitle">未标题作品</div>
-
-            <div class="work-meta">
-              <div>作品名称：<span id="workNameText">未上传</span></div>
-              <div>上传时间：<span id="uploadTimeText">--</span></div>
+        <div class="section-header">Beta 评估工作台</div>
+        <div class="panel-body">
+          <div class="grid-2">
+            <div>
+              <div class="field-label">模型模式</div>
+              <div class="mode-switch">
+                <button class="mode-btn active" id="stableModeBtn">稳定版 V1</button>
+                <button class="mode-btn" id="betaModeBtn">Beta 大模型版</button>
+              </div>
             </div>
-
-            <textarea
-              id="rubricInput"
-              class="rubric-box"
-              placeholder="请输入教师评分标准，例如：请从构图、色彩、创意、完整度、主题契合五个维度进行评分，并生成综合评语。"
-            ></textarea>
-
-            <div class="upload-area" id="dropZone">
-              <div style="font-size:16px;font-weight:800;margin-bottom:8px;">点击或拖拽图片到这里</div>
-              <div style="font-size:13px;color:var(--muted);">支持 JPG / PNG / JPEG</div>
-              <input type="file" id="imageInput" accept="image/*" />
+            <div>
+              <div class="field-label">知识库增强</div>
+              <label class="inline-check">
+                <input type="checkbox" id="useKbCheck" checked />
+                <span>上传文档后，用知识库辅助评估</span>
+              </label>
             </div>
+          </div>
 
-            <button class="upload-btn" id="uploadBtn">上传并生成AI评估</button>
+          <div style="margin-top:18px">
+            <div class="field-label">教师评分标准 / Beta 提示要求</div>
+            <textarea id="rubricInput" class="rubric-box" placeholder="例如：请从构图、色彩、创意、完整度、主题契合五个维度评分；Beta 模式下结合知识库中的教师标准进行更贴合的建议输出。"></textarea>
+          </div>
 
-            <div class="preview-wrap">
-              <div id="emptyPreview">上传后这里显示作品预览</div>
-              <img id="previewImage" alt="作品预览" />
+          <div class="grid-2" style="margin-top:16px; align-items:start;">
+            <div>
+              <div class="field-label">作品图片上传</div>
+              <div class="upload-area" id="dropZone">
+                <div style="font-size:16px;font-weight:800;margin-bottom:8px;">点击或拖拽图片到这里</div>
+                <div style="font-size:13px;color:var(--muted);">支持 JPG / PNG / JPEG / WEBP</div>
+                <input type="file" id="imageInput" accept="image/*" />
+              </div>
             </div>
+            <div>
+              <div class="field-label">知识库文档上传</div>
+              <div class="kb-upload-box">
+                <div style="font-size:15px;font-weight:800;margin-bottom:10px;">支持 txt / md / pdf / docx / json / csv</div>
+                <input type="file" id="kbInput" class="mini-input" />
+                <div class="action-row">
+                  <button class="secondary-btn" id="uploadKbBtn">上传到知识库</button>
+                  <button class="secondary-btn" id="refreshKbBtn">刷新知识库列表</button>
+                </div>
+                <div class="mini-note">这块主要用于 Beta 演示：把“教师评分标准、课程要求、示例说明”放进来，让后端在评估时做知识增强。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="primary-btn" id="uploadBtn">上传并生成 AI 评估</button>
+          </div>
+
+          <div class="preview-wrap">
+            <div id="emptyPreview">上传后这里显示作品预览</div>
+            <img id="previewImage" alt="作品预览" />
           </div>
         </div>
       </div>
 
       <div class="panel">
-        <div class="section-header">AI深度评价与学习建议</div>
-        <div class="evaluation-body">
+        <div class="section-header">AI 识别结果 · Beta 增强反馈</div>
+        <div class="panel-body">
           <div class="subsection-title">识别结果与评估反馈</div>
           <div class="comment-list" id="commentList">
             <div class="comment-card">等待上传作品后生成 AI 识别与评估结果。</div>
+          </div>
+
+          <div style="margin-top:22px" class="subsection-title">知识库命中片段</div>
+          <div class="kb-list" id="kbHitsList">
+            <div class="kb-item">暂无命中结果。上传知识库文档后，Beta 模式可以在这里展示引用到的相关片段。</div>
           </div>
         </div>
       </div>
@@ -945,20 +311,14 @@
     <div class="panel right">
       <div class="right-header">
         <div class="right-header-title">AI量化评估报告</div>
-        <button class="export-btn">⬇ 导出报告</button>
+        <div class="status-chip" id="modeUsedChip">运行模式：Stable</div>
       </div>
-
       <div class="right-body">
-        <div class="chart-box">
-          <canvas id="radarChart"></canvas>
-        </div>
-
+        <div class="chart-box"><canvas id="radarChart"></canvas></div>
         <div class="score-box">
-          <div class="score-label">本次AI综合得分</div>
+          <div class="score-label">本次 AI 综合得分</div>
           <div class="score-value"><span id="scoreValue">0</span><span>/100</span></div>
         </div>
-
-        <a href="javascript:void(0)" class="detail-link">ⓘ 查看详细指标说明</a>
 
         <div class="dimension-list">
           <div class="dimension-title">各维度详情</div>
@@ -967,6 +327,11 @@
           <div class="dimension-item"><span>创意亮点</span><span id="d3">0</span></div>
           <div class="dimension-item"><span>完整度</span><span id="d4">0</span></div>
           <div class="dimension-item"><span>主题契合</span><span id="d5">0</span></div>
+        </div>
+
+        <div style="margin-top:20px" class="subsection-title">知识库文件概览</div>
+        <div class="kb-list" id="kbFileList">
+          <div class="kb-item">暂无知识库文件。</div>
         </div>
       </div>
     </div>
@@ -980,15 +345,21 @@
     const rubricInput=document.getElementById("rubricInput");
     const dropZone=document.getElementById("dropZone");
     const themeToggle=document.getElementById("themeToggle");
-
-    const workTitle=document.getElementById("workTitle");
-    const workNameText=document.getElementById("workNameText");
-    const uploadTimeText=document.getElementById("uploadTimeText");
-    const sidebarWorkName=document.getElementById("sidebarWorkName");
-    const sidebarWorkTime=document.getElementById("sidebarWorkTime");
-    const commentList=document.getElementById("commentList");
+    const uploadKbBtn=document.getElementById("uploadKbBtn");
+    const refreshKbBtn=document.getElementById("refreshKbBtn");
+    const kbInput=document.getElementById("kbInput");
+    const useKbCheck=document.getElementById("useKbCheck");
     const scoreValue=document.getElementById("scoreValue");
-
+    const commentList=document.getElementById("commentList");
+    const kbHitsList=document.getElementById("kbHitsList");
+    const kbFileList=document.getElementById("kbFileList");
+    const sidebarWorkName=document.getElementById("sidebarWorkName");
+    const sidebarModeText=document.getElementById("sidebarModeText");
+    const sidebarKbCount=document.getElementById("sidebarKbCount");
+    const stableModeBtn=document.getElementById("stableModeBtn");
+    const betaModeBtn=document.getElementById("betaModeBtn");
+    const modelStatusChip=document.getElementById("modelStatusChip");
+    const modeUsedChip=document.getElementById("modeUsedChip");
     const d1=document.getElementById("d1");
     const d2=document.getElementById("d2");
     const d3=document.getElementById("d3");
@@ -996,14 +367,10 @@
     const d5=document.getElementById("d5");
 
     let radarChart=null;
+    let currentMode="stable";
 
     function updateThemeButton(){
-      if(document.body.classList.contains("dark")){
-        themeToggle.textContent="☀️ 切换浅色";
-      }else{
-        themeToggle.textContent="🌙 切换深色";
-      }
-
+      themeToggle.textContent=document.body.classList.contains("dark") ? "☀️ 切换浅色" : "🌙 切换深色";
       if(radarChart){
         renderRadar([
           Number(d1.textContent)||0,
@@ -1020,79 +387,30 @@
       localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
       updateThemeButton();
     });
-
-    const savedTheme=localStorage.getItem("theme");
-    if(savedTheme==="dark"){
-      document.body.classList.add("dark");
-    }
+    if(localStorage.getItem("theme")==="dark"){document.body.classList.add("dark");}
     updateThemeButton();
 
-    function formatNow(){
-      const now=new Date();
-      const y=now.getFullYear();
-      const m=String(now.getMonth()+1).padStart(2,"0");
-      const d=String(now.getDate()).padStart(2,"0");
-      const h=String(now.getHours()).padStart(2,"0");
-      const min=String(now.getMinutes()).padStart(2,"0");
-      const s=String(now.getSeconds()).padStart(2,"0");
-      return `${y}/${m}/${d} ${h}:${min}:${s}`;
+    function escapeHtml(text){
+      const div=document.createElement("div");
+      div.textContent=String(text ?? "");
+      return div.innerHTML;
     }
 
     function renderRadar(values){
       const ctx=document.getElementById("radarChart");
-
-      if(radarChart){
-        radarChart.destroy();
-      }
-
+      if(radarChart){radarChart.destroy();}
       const dark=document.body.classList.contains("dark");
-      const labelColor=dark ? "#c7d8f7" : "#476387";
-      const gridColor=dark ? "rgba(148,163,184,0.18)" : "rgba(59,130,246,0.12)";
-      const areaColor=dark ? "rgba(77,163,255,0.20)" : "rgba(59,130,246,0.16)";
-      const lineColor=dark ? "#4da3ff" : "#3b82f6";
-      const pointColor=dark ? "#7cc0ff" : "#2563eb";
-
-      radarChart=new Chart(ctx,{
-        type:"radar",
-        data:{
-          labels:["构图表达","色彩表现","创意亮点","完整度","主题契合"],
-          datasets:[{
-            label:"评分结果",
-            data:values,
-            fill:true,
-            backgroundColor:areaColor,
-            borderColor:lineColor,
-            borderWidth:3,
-            pointBackgroundColor:pointColor,
-            pointBorderColor:"#ffffff",
-            pointBorderWidth:1,
-            pointRadius:3
-          }]
-        },
-        options:{
-          maintainAspectRatio:false,
-          plugins:{
-            legend:{display:false}
-          },
-          scales:{
-            r:{
-              min:0,
-              max:100,
-              ticks:{
-                display:false,
-                stepSize:20
-              },
-              grid:{color:gridColor},
-              angleLines:{color:gridColor},
-              pointLabels:{
-                color:labelColor,
-                font:{size:13}
-              }
-            }
-          }
-        }
-      });
+      radarChart=new Chart(ctx,{type:"radar",data:{labels:["构图表达","色彩表现","创意亮点","完整度","主题契合"],datasets:[{label:"评分结果",data:values,fill:true,backgroundColor:dark?"rgba(77,163,255,0.20)":"rgba(59,130,246,0.16)",borderColor:dark?"#4da3ff":"#3b82f6",borderWidth:3,pointBackgroundColor:dark?"#7cc0ff":"#2563eb",pointBorderColor:"#ffffff",pointBorderWidth:1,pointRadius:3}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{min:0,max:100,ticks:{display:false,stepSize:20},grid:{color:dark?"rgba(148,163,184,0.18)":"rgba(59,130,246,0.12)"},angleLines:{color:dark?"rgba(148,163,184,0.18)":"rgba(59,130,246,0.12)"},pointLabels:{color:dark?"#c7d8f7":"#476387",font:{size:13}}}}}});
     }
+
+    function setMode(mode){
+      currentMode=mode;
+      stableModeBtn.classList.toggle("active", mode==="stable");
+      betaModeBtn.classList.toggle("active", mode==="beta");
+      sidebarModeText.textContent=mode==="beta" ? "Beta 大模型版" : "Stable V1";
+    }
+    stableModeBtn.addEventListener("click",()=>setMode("stable"));
+    betaModeBtn.addEventListener("click",()=>setMode("beta"));
 
     function updatePreview(file){
       if(!file)return;
@@ -1108,194 +426,170 @@
     function handleFiles(files){
       const file=files[0];
       if(!file)return;
-
       imageInput.files=files;
       updatePreview(file);
-
-      workTitle.textContent=file.name;
-      workNameText.textContent=file.name;
       sidebarWorkName.textContent=file.name;
-      const nowText=formatNow();
-      uploadTimeText.textContent=nowText;
-      sidebarWorkTime.textContent=nowText;
     }
 
-    function escapeHtml(text){
-      const div=document.createElement("div");
-      div.textContent=String(text ?? "");
-      return div.innerHTML;
-    }
-
-    function buildCommentCard(title, content){
-      return '<div class="comment-card"><b>✓ '+escapeHtml(title)+'：</b> '+escapeHtml(content)+'</div>';
-    }
-
-    function buildDescriptionCard(title, content){
-      return '<div class="comment-card description-card"><b>👁 '+escapeHtml(title)+'：</b> '+escapeHtml(content)+'</div>';
+    function buildCommentCard(title, content, variant="green"){
+      const cls=variant==="cyan"?"comment-card description-card":variant==="beta"?"comment-card beta-card":variant==="warn"?"comment-card warn-card":"comment-card";
+      const icon=variant==="cyan"?"👁":variant==="beta"?"🧪":variant==="warn"?"⚠":"✓";
+      return '<div class="'+cls+'"><b>'+icon+' '+escapeHtml(title)+'：</b> '+escapeHtml(content)+'</div>';
     }
 
     function buildListCard(title, items){
-      const safeItems=Array.isArray(items) ? items : [];
-      const html=safeItems.length
-        ? safeItems.map(item=>escapeHtml(item)).join("<br>")
-        : "暂无";
+      const safeItems=Array.isArray(items)?items:[];
+      const html=safeItems.length?safeItems.map(item=>escapeHtml(item)).join("<br>"):"暂无";
       return '<div class="comment-card"><b>✓ '+escapeHtml(title)+'：</b><br>'+html+'</div>';
     }
 
-    imageInput.addEventListener("change",function(){
-      handleFiles(this.files);
-    });
+    function buildKbHit(item){
+      return '<div class="kb-item"><div style="font-weight:800;margin-bottom:6px">'+escapeHtml(item.filename)+' · 片段 '+escapeHtml(item.chunk_index)+'</div><div style="color:var(--muted);margin-bottom:6px">匹配分：'+escapeHtml(item.score)+'</div><div>'+escapeHtml(item.content)+'</div></div>';
+    }
 
-    dropZone.addEventListener("click",()=>{
-      imageInput.click();
-    });
+    imageInput.addEventListener("change",function(){handleFiles(this.files);});
+    dropZone.addEventListener("click",()=>imageInput.click());
+    ["dragenter","dragover"].forEach(event=>dropZone.addEventListener(event,e=>{e.preventDefault();dropZone.classList.add("highlight");}));
+    ["dragleave","drop"].forEach(event=>dropZone.addEventListener(event,e=>{e.preventDefault();dropZone.classList.remove("highlight");}));
+    dropZone.addEventListener("drop",e=>handleFiles(e.dataTransfer.files));
 
-    ["dragenter","dragover"].forEach(event=>{
-      dropZone.addEventListener(event,e=>{
-        e.preventDefault();
-        dropZone.classList.add("highlight");
-      });
-    });
-
-    ["dragleave","drop"].forEach(event=>{
-      dropZone.addEventListener(event,e=>{
-        e.preventDefault();
-        dropZone.classList.remove("highlight");
-      });
-    });
-
-    dropZone.addEventListener("drop",e=>{
-      handleFiles(e.dataTransfer.files);
-    });
-
-    uploadBtn.addEventListener("click",async function(){
-      const file=imageInput.files[0];
-      if(!file){
-        alert("请先选择一张图片。");
-        return;
+    async function loadHealth(){
+      try{
+        const res=await fetch("/health");
+        const data=await res.json();
+        modelStatusChip.textContent=`Stable:${data.stable_model.loaded ? "已加载" : "未加载"} · Beta:${data.beta_model.loaded ? "已加载" : "待加载"}`;
+      }catch(err){
+        modelStatusChip.textContent="状态读取失败";
       }
+    }
 
+    async function loadKbList(){
+      try{
+        const res=await fetch("/kb/list");
+        const data=await res.json();
+        sidebarKbCount.textContent=`${data.count || 0} 个文件`;
+        if(!data.items || !data.items.length){
+          kbFileList.innerHTML='<div class="kb-item">暂无知识库文件。</div>';
+          return;
+        }
+        kbFileList.innerHTML=data.items.map(item=>'<div class="kb-item"><div style="font-weight:800">'+escapeHtml(item.filename)+'</div><div style="color:var(--muted)">切片数：'+escapeHtml(item.chunk_count)+' · '+escapeHtml(item.created_at)+'</div><div style="margin-top:6px">'+escapeHtml(item.content_preview || "")+'</div></div>').join("");
+      }catch(err){
+        kbFileList.innerHTML='<div class="kb-item">知识库列表加载失败。</div>';
+      }
+    }
+
+    uploadKbBtn.addEventListener("click", async ()=>{
+      const file=kbInput.files[0];
+      if(!file){alert("请先选择知识库文件");return;}
+      uploadKbBtn.disabled=true;
+      uploadKbBtn.textContent="上传中...";
+      const formData=new FormData();
+      formData.append("file", file);
+      try{
+        const res=await fetch("/kb/upload", {method:"POST", body:formData});
+        const data=await res.json();
+        if(!res.ok){throw new Error(data.detail || "知识库上传失败");}
+        alert(`知识库上传成功：${data.filename}，生成 ${data.chunk_count} 个片段`);
+        kbInput.value="";
+        await loadKbList();
+      }catch(err){
+        alert(err.message);
+      }finally{
+        uploadKbBtn.disabled=false;
+        uploadKbBtn.textContent="上传到知识库";
+      }
+    });
+
+    refreshKbBtn.addEventListener("click", loadKbList);
+
+    uploadBtn.addEventListener("click", async ()=>{
+      const file=imageInput.files[0];
+      if(!file){alert("请先选择一张图片");return;}
       uploadBtn.disabled=true;
       uploadBtn.textContent="AI评估生成中...";
-
       commentList.innerHTML='<div class="comment-card">AI正在识别图片内容并生成评估，请稍等...</div>';
+      kbHitsList.innerHTML='<div class="kb-item">正在匹配知识库片段...</div>';
 
       const formData=new FormData();
-      formData.append("file",file);
-      formData.append("rubric",rubricInput.value);
+      formData.append("file", file);
+      formData.append("rubric", rubricInput.value);
+      formData.append("mode", currentMode);
+      formData.append("use_kb", useKbCheck.checked ? "true" : "false");
 
       try{
-        const response=await fetch("/upload",{
-          method:"POST",
-          body:formData
-        });
-
+        const response=await fetch("/upload", {method:"POST", body:formData});
         const rawText=await response.text();
         let data={};
-
-        try{
-          data=JSON.parse(rawText);
-        }catch(parseError){
-          throw new Error("后端返回内容不是有效JSON：" + rawText);
-        }
-
-        if(!response.ok){
-          throw new Error(data.detail || ("上传失败，状态码：" + response.status));
-        }
+        try{data=JSON.parse(rawText);}catch(err){throw new Error("后端返回内容不是有效JSON："+rawText);}
+        if(!response.ok){throw new Error(data.detail || "上传失败");}
 
         const total=Number(data.score)||0;
         const real=data.dimensions||{};
-
-        const dims=[
-          Number(real.composition)||0,
-          Number(real.color)||0,
-          Number(real.creativity)||0,
-          Number(real.completeness)||0,
-          Number(real.theme)||0
-        ];
-
+        const dims=[Number(real.composition)||0,Number(real.color)||0,Number(real.creativity)||0,Number(real.completeness)||0,Number(real.theme)||0];
         scoreValue.textContent=total;
-        d1.textContent=dims[0];
-        d2.textContent=dims[1];
-        d3.textContent=dims[2];
-        d4.textContent=dims[3];
-        d5.textContent=dims[4];
-
+        d1.textContent=dims[0]; d2.textContent=dims[1]; d3.textContent=dims[2]; d4.textContent=dims[3]; d5.textContent=dims[4];
         renderRadar(dims);
 
-        const imageDescription=data.image_description||"暂无图片内容描述";
-        const strengths=Array.isArray(data.strengths)?data.strengths:[];
-        const weaknesses=Array.isArray(data.weaknesses)?data.weaknesses:[];
-        const comment=data.comment||"暂无综合评价";
-        const suggestion=data.suggestion||"暂无学习建议";
+        modeUsedChip.textContent=`运行模式：${data.mode_used === "beta" ? "Beta" : "Stable"}${data.fallback_used ? "（Beta回退到Stable）" : ""}`;
 
         commentList.innerHTML=
-          buildDescriptionCard("AI图片识别描述", imageDescription)+
-          buildCommentCard("综合评价", comment)+
-          buildCommentCard("学习建议", suggestion)+
-          buildListCard("核心优势", strengths)+
-          buildListCard("待提升点", weaknesses);
+          buildCommentCard("AI图片识别描述", data.image_description || "暂无图片内容描述", "cyan")+
+          buildCommentCard("综合评价", data.comment || "暂无综合评价")+
+          buildCommentCard("学习建议", data.suggestion || "暂无学习建议")+
+          buildListCard("核心优势", data.strengths || [])+
+          buildListCard("待提升点", data.weaknesses || [])+
+          buildCommentCard("本次调用说明", `请求模式：${data.mode_requested}；实际模式：${data.mode_used}；知识库：${data.used_kb ? "开启" : "关闭"}`, "beta")+
+          (data.fallback_used ? buildCommentCard("Beta 回退提示", "当前 Beta 模型未成功启用，因此本次已自动回退到稳定版模型继续完成评估。", "warn") : "");
 
+        if(Array.isArray(data.kb_hits) && data.kb_hits.length){
+          kbHitsList.innerHTML=data.kb_hits.map(buildKbHit).join("");
+        }else{
+          kbHitsList.innerHTML='<div class="kb-item">本次没有命中知识库片段，或当前未启用知识库增强。</div>';
+        }
       }catch(error){
-        commentList.innerHTML=
-          '<div class="comment-card" style="background:rgba(127,29,29,0.16);border-color:rgba(248,113,113,0.24);color:#b91c1c;"><b>请求失败：</b>'+escapeHtml(error.message)+'</div>';
+        commentList.innerHTML=buildCommentCard("请求失败", error.message, "warn");
+        kbHitsList.innerHTML='<div class="kb-item">请求失败，未返回知识库命中结果。</div>';
       }finally{
         uploadBtn.disabled=false;
-        uploadBtn.textContent="上传并生成AI评估";
+        uploadBtn.textContent="上传并生成 AI 评估";
       }
     });
 
     renderRadar([0,0,0,0,0]);
+    setMode("stable");
+    loadHealth();
+    loadKbList();
 
-    const loginOverlay = document.getElementById("loginOverlay");
-    const loginUser = document.getElementById("loginUser");
-    const loginPwd = document.getElementById("loginPwd");
-    const loginSubmitBtn = document.getElementById("loginBtn");
+    const loginOverlay=document.getElementById("loginOverlay");
+    const loginUser=document.getElementById("loginUser");
+    const loginPwd=document.getElementById("loginPwd");
+    const loginSubmitBtn=document.getElementById("loginBtn");
 
-    async function doLogin() {
-      const username = loginUser.value.trim();
-      const password = loginPwd.value.trim();
-
-      if (!username || !password) {
-        alert("请输入账号和密码");
-        return;
-      }
-
-      loginSubmitBtn.textContent = "验证中...";
-      loginSubmitBtn.disabled = true;
-
-      try {
-        const response = await fetch("/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password })
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
+    async function doLogin(){
+      const username=loginUser.value.trim();
+      const password=loginPwd.value.trim();
+      if(!username || !password){alert("请输入账号和密码");return;}
+      loginSubmitBtn.textContent="验证中...";
+      loginSubmitBtn.disabled=true;
+      try{
+        const response=await fetch("/login", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({username, password})});
+        const data=await response.json();
+        if(data.success){
           loginOverlay.classList.add("hidden");
-          document.querySelector(".user-name").textContent = data.name;
-          document.querySelector(".user-sub").textContent = data.student_id;
-        } else {
+          document.querySelector(".user-name").textContent=data.name;
+          document.querySelector(".user-sub").textContent=data.student_id;
+        }else{
           alert(data.msg || "登录失败");
         }
-      } catch (err) {
+      }catch(err){
         alert("请求错误: " + err.message);
-      } finally {
-        loginSubmitBtn.textContent = "登 录";
-        loginSubmitBtn.disabled = false;
+      }finally{
+        loginSubmitBtn.textContent="登 录";
+        loginSubmitBtn.disabled=false;
       }
     }
-
     loginSubmitBtn.addEventListener("click", doLogin);
-
-    loginPwd.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        doLogin();
-      }
-    });
+    loginPwd.addEventListener("keydown", e=>{if(e.key==="Enter"){e.preventDefault();doLogin();}});
   </script>
 </body>
 </html>

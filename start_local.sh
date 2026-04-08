@@ -30,7 +30,7 @@ if command -v conda >/dev/null 2>&1; then
   conda activate "$CONDA_ENV"
 fi
 
-echo "启动本地模式..."
+echo "启动 8.0 Beta 本地模式..."
 echo "项目目录: $PROJECT_DIR"
 echo "访问地址: http://$HOST:$PORT"
 echo "日志文件: $LOG_FILE"

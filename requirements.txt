@@ -7,3 +7,5 @@ torch
 qwen-vl-utils
 pillow
 accelerate
+pypdf
+python-docx
